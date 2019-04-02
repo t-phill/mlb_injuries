@@ -30,22 +30,24 @@ driver.get("http://www.brooksbaseball.net/landing.php?player=592094")
 
 playercarddict = {}
 df = pd.read_pickle('2018_ids.pkl')
-df = df.set_index(np.arange(len(df)))
+# df = df.set_index(np.arange(len(df)))
     
 for index, row in df.iterrows():
-    
-    player = df.iloc[index]['name_first'] + ' ' + df.iloc[index]['name_last']
-    playerid = df.iloc[index]['key_mlbam']
-    
-    page = "http://www.brooksbaseball.net/landing.php?player=" + str(playerid)
+    try:
+        player = df.iloc[index]['name_first'] + ' ' + df.iloc[index]['name_last']
+        playerid = df.iloc[index]['key_mlbam']
+        
+        page = "http://www.brooksbaseball.net/landing.php?player=" + str(playerid)
 
-    driver.get(page)
-    
-    soup = BeautifulSoup(driver.page_source, 'html.parser')
-    row = soup.find(class_='well').find('p').text.strip()
-    
-    
-    playercarddict[player] = row
+        driver.get(page)
+        
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        row = soup.find(class_='well').find('p').text.strip()
+        
+        
+        playercarddict[player] = row
+    except:
+        continue
 
 with open('playercard.pkl', 'wb+') as handle:
     pickle.dump(playercarddict, handle, protocol=pickle.HIGHEST_PROTOCOL)
