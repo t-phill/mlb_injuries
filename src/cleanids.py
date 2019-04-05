@@ -11,6 +11,7 @@ def agg_year(year):
     season.columns = map(str.lower, season.columns)
     season['name'] = season['name'].str.lower()
     season['name'] = season['name'].str.replace('.', '')
+    season['name'] = season['name'].str.replace("'", '')
     season['name'] = season['name'].str.replace(' ', '')
     season['name'] = season['name'].str.strip()
     season['name'] = season['name'].apply(jr_replace)
@@ -23,9 +24,11 @@ def agg_year(year):
 def clean_ids(file):
     ids = pd.read_pickle(file)
     ids['name_last'] = ids['name_last'].str.replace('.', '')
+    ids['name_last'] = ids['name_last'].str.replace("'", '')
     ids['name_last'] = ids['name_last'].str.replace(' ', '')
     ids['name_last'] = ids['name_last'].str.strip()
     ids['name_first'] = ids['name_first'].str.replace('.', '')
+    ids['name_first'] = ids['name_first'].str.replace("'", '')
     ids['name_first'] = ids['name_first'].str.replace(' ', '')
     ids['name_first'] = ids['name_first'].str.strip()
 
