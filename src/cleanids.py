@@ -3,11 +3,41 @@ import numpy as np
 import pandas as pd
 import pickle
 import re 
+import datetime
+start_date = '2018-04-01'
 
 season_range = pd.read_pickle('../pickles/agg_games.pkl')
 
 # keys_clean = keys_clean.sort_values(by='name_last')
 # keys_clean = keys_clean.set_index(np.arange(len(keys_clean)))
+
+def generate_games(year):
+    start_date = '{}-04-01'.format(year)
+    times = list()
+    start = datetime.datetime.strptime("{}-03-29".format(year), "%Y-%m-%d")
+    end = datetime.datetime.strptime("{}-10-29".format(year), "%Y-%m-%d")
+    date_generated = [start + datetime.timedelta(days=x) for x in range(0, (end-start).days)]
+    for date in date_generated:
+        date = str(date.strftime("%Y-%m-%d"))
+        times.append(date)
+    frames = pd.DataFrame()
+    for time in times:
+        try:
+            print(time)
+            frame = pitching_stats_range(time, time)
+            frame['date'] = time
+            frames = frames.append(frame)
+        except:
+            print('errorrrrr: ', time)
+            continue
+    frames = frames
+    return frames
+
+def clean_games():
+    firsts = []
+    lasts = []
+    season = frames
+
 
 
 def agg_year(year):
