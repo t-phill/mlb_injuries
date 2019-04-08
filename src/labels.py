@@ -34,6 +34,11 @@ merge_17 = games_17.merge(inj_17, on='key_mlbam', how='left')
 merge_16 = games_16.merge(inj_16, on='key_mlbam', how='left')
 merge_15 = games_15.merge(inj_15, on='key_mlbam', how='left')
 
+merge_18 = merge_18.sort_values(by=['key_mlbam', 'date'])
+merge_17 = merge_17.sort_values(by=['key_mlbam', 'date'])
+merge_16 = merge_16.sort_values(by=['key_mlbam', 'date'])
+merge_15 = merge_15.sort_values(by=['key_mlbam', 'date'])
+
 merge_18['days_preceeding'] = merge_18['startdate'] - merge_18['date']
 merge_17['days_preceeding'] = merge_17['startdate'] - merge_17['date']
 merge_16['days_preceeding'] = merge_16['startdate'] - merge_16['date']
@@ -69,8 +74,8 @@ for id in id_list_18:
     frame.at[inj_index, 'injured?'] = 1
     frames_18 = frames_18.append(frame)
     frames_18 = frames_18.drop_duplicates(keep=False)
-merge_18 = frames_18.append(merge_18_noinj)
-merge_18 = merge_18.sort_values(by=['key_mlbam', 'date'])
+df_18 = frames_18.append(merge_18_noinj)
+df_18 = df_18.sort_values(by=['key_mlbam', 'date'])
 
 frames_17 = pd.DataFrame()
 for id in id_list_17:
@@ -82,8 +87,8 @@ for id in id_list_17:
     frame.at[inj_index, 'injured?'] = 1
     frames_17 = frames_17.append(frame)
     frames_17 = frames_17.drop_duplicates(keep=False)
-merge_17 = frames_17.append(merge_17_noinj)
-merge_17 = merge_17.sort_values(by=['key_mlbam', 'date'])
+df_17 = frames_17.append(merge_17_noinj)
+df_17 = df_17.sort_values(by=['key_mlbam', 'date'])
 
 
 frames_16 = pd.DataFrame()
@@ -96,8 +101,8 @@ for id in id_list_16:
     frame.at[inj_index, 'injured?'] = 1
     frames_16 = frames_16.append(frame)
     frames_16 = frames_16.drop_duplicates(keep=False)
-merge_16 = frames_16.append(merge_16_noinj)
-merge_16 = merge_16.sort_values(by=['key_mlbam', 'date'])
+df_16 = frames_16.append(merge_16_noinj)
+df_16 = df_16.sort_values(by=['key_mlbam', 'date'])
 
 
 frames_15 = pd.DataFrame()
@@ -110,6 +115,7 @@ for id in id_list_15:
     frame.at[inj_index, 'injured?'] = 1
     frames_15 = frames_15.append(frame)
     frames_15 = frames_15.drop_duplicates(keep=False)
-merge_15 = frames_15.append(merge_15_noinj)
-merge_15 = merge_15.sort_values(by=['key_mlbam', 'date'])
+df_15 = frames_15.append(merge_15_noinj)
+df_15 = df_15.sort_values(by=['key_mlbam', 'date'])
+
 
