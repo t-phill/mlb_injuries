@@ -1,7 +1,7 @@
 import pandas as pd 
 import numpy as np 
 
-from pybaseball import statcast_pi
+from pybaseball import *
 
 def pitches_season(year):
     march = statcast('{}-03-01'.format(year), '{}-03-31'.format(year))
@@ -18,8 +18,6 @@ def pitches_season(year):
     copy = total.dropna(subset=['pitch_type'])
 
     return copy
-
-
 
 
 

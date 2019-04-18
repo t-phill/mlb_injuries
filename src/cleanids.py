@@ -4,7 +4,6 @@ import pandas as pd
 import pickle
 import re 
 import datetime
-start_date = '2018-04-01'
 
 season_range = pd.read_pickle('../pickles/agg_games.pkl')
 
@@ -12,6 +11,12 @@ season_range = pd.read_pickle('../pickles/agg_games.pkl')
 # keys_clean = keys_clean.set_index(np.arange(len(keys_clean)))
 
 def generate_games(year):
+    '''
+    function do generate baseball-reference pitching statistics for each day in given season(year)
+    
+    input : 2018
+    return: pandas dataframe 
+    '''
     start_date = '{}-04-01'.format(year)
     times = list()
     start = datetime.datetime.strptime("{}-03-29".format(year), "%Y-%m-%d")
@@ -33,10 +38,12 @@ def generate_games(year):
     frames = frames
     return frames
 
-def clean_games():
-    firsts = []
-    lasts = []
-    season = frames
+# def clean_games():
+#     firsts = []
+#     lasts = []
+#     season = frames
+#     season.columns = map(str.lower, season.columns)
+#     season['name'] = season['name'].str.lower()
 
 
 

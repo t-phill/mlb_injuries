@@ -3,7 +3,7 @@ import numpy as np
 import pickle
 import re
 
-
+# clean injury csv created from spotrac_scrape.py
 
 def clean_inj(file, year):
     inj = pd.read_csv(file)

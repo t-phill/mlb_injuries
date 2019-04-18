@@ -8,31 +8,30 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 import random
-
 import time
 import csv
-
 import re
-
 import os
+
+# Python script scraping spottrac injury data
+
 chromedriver = "/Applications/chromedriver"
 os.environ["webdriver.chrome.driver"] = chromedriver
 
 driver = webdriver.Chrome(chromedriver)
+# Alter link for desired year
 driver.get("https://www.spotrac.com/mlb/disabled-list/2018/cumulative-player/pitching/")
 
+# Choose file name
 with open('dl_list_2018.csv', 'w',newline='') as csvfile:
     file = csv.writer(csvfile)
-
     file.writerow(['Player', 'Posititon', 'Team', 'Injury', 'Status', 'Days', 'Money_Earned'])
-    
     soup = BeautifulSoup(driver.page_source, 'html.parser')
-    
     rows = soup.find_all(class_='parent')
+    # Change row slicing based on year
     rows = rows[68:]
 
     players = []
@@ -41,9 +40,7 @@ with open('dl_list_2018.csv', 'w',newline='') as csvfile:
     for row in rows:
         player = row.find('a').text
         players.append(player)
-    
         injury = row.find_all(class_='center')
-    
         for info in injury:
             inj = info.text
             dl_data.append(inj)
@@ -55,7 +52,6 @@ with open('dl_list_2018.csv', 'w',newline='') as csvfile:
     days = []
     money = []
     
-
     for index, item in enumerate(dl_data):
         if index%6 == 0:
             positions.append(item)
@@ -90,8 +86,8 @@ with open('dl_list_2018.csv', 'w',newline='') as csvfile:
         if index%6 == 0:
             money.append(item)
     
+    # Year dependent
     for num in np.arange(0,339):
             
         observation = [players[num], positions[num], teams[num], injuries[num], status[num], days[num], money[num]]
-
         file.writerow(observation)
