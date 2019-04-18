@@ -6,6 +6,17 @@ import re
 # clean injury csv created from spotrac_scrape.py
 
 def clean_inj(file, year):
+    '''
+    function to clean injury data created in spotrac_scrape.py
+    applies needed regex functions, creates start_date feature
+    
+    input:
+        file: name (csv)
+        year: int (yyyy)
+    output:
+        pandas dataframe
+        
+    '''
     inj = pd.read_csv(file)
     inj['Year'] = year
     inj['Status'] = inj.Status.str[9:]
@@ -57,16 +68,19 @@ def clean_inj(file, year):
     
     return df
 
-
 def jr_replace(x):
+    #removes 'jr' from names
     match = re.sub(r'jr$',"",x)
     return match
 
 def title_replace(x):
+    #removes titles
     match = re.sub(r'iii$',"",x)
     return match
 
 def correction2(string):
+    #function to make initialed names consistent
     corstr = re.sub('\ +',' ',string)
     final = re.sub('\.','. ',corstr)
     return final
+
